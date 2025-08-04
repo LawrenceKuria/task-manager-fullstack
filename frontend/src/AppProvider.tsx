@@ -2,6 +2,7 @@ import React, { createContext, useContext, useReducer, useEffect } from "react";
 import axios from "axios";
 import TaskList from "./domain/TaskList";
 import Task from "./domain/Task";
+import { useAuth } from "./AuthProvider";
 
 interface AppState {
   taskLists: TaskList[];
@@ -170,6 +171,16 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  const { token } = useAuth();
+
+  useEffect(() => {
+    if (token) {
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    } else {
+      delete axios.defaults.headers.common["Authorization"];
+    }
+  }, [token]);
 
   const jsonHeaders = {
     headers: { "Content-Type": "application/json" },
