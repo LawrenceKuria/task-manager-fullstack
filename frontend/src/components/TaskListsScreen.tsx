@@ -3,9 +3,11 @@ import { List, Plus } from "lucide-react";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../AppProvider";
+import { useAuth } from "../AuthProvider";
 
 const TaskListScreen: React.FC = () => {
   const { state, api } = useAppContext();
+  const { logout } = useAuth();
 
   // Fetch task lists when the component mounts
   useEffect(() => {
@@ -26,9 +28,19 @@ const TaskListScreen: React.FC = () => {
     console.log(`Navigating to task list ${taskListId}`);
   };
 
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
+
   return (
     <div className="p-4 max-w-sm w-full">
-      <h1 className="text-2xl font-bold mb-4 pr-2">My Task Lists</h1>
+      <div className="flex justify-between items-center mb-4 pr-2">
+        <h1 className="text-2xl font-bold">My Task Lists</h1>
+        <Button variant="bordered" onPress={handleLogout}>
+          Logout
+        </Button>
+      </div>
       <Button
         onPress={handleCreateTaskList}
         color="primary"
