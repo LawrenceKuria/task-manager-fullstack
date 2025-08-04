@@ -4,6 +4,7 @@ import com.lawrence.task_manager.domain.dto.TaskListDto;
 import com.lawrence.task_manager.domain.entities.TaskList;
 import com.lawrence.task_manager.mappers.TaskListMapper;
 import com.lawrence.task_manager.services.TaskListService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/task-lists")
+@PreAuthorize("hasRole('USER')")
 public class TaskListController {
 
     private final TaskListService taskListService;
