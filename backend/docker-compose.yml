@@ -1,0 +1,8 @@
+services:
+  db:
+    image: postgres:latest # Specifies the PostgreSQL image and version
+    ports:
+      - "5432:5432" # Maps the container's default PostgreSQL port to the host
+    restart: always # Ensures the container restarts alaways
+    environment:
+      POSTGRES_PASSWORD: changemeinprod! # Defines the password for the user
